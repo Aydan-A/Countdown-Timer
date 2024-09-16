@@ -5,14 +5,17 @@ let countdownInterval; // Store the interval id so we can clear it later if need
 dateinput.addEventListener("change", function (e) {
   e.preventDefault();
   let EndDate = new Date(dateinput.value);
+  // Clear any existing interval before starting a new one
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
   leftTime(EndDate);
   updateeverysecond(EndDate);
 });
 
 function leftTime(time) {
-  let CurrentDate = Date.parse(new Date());
-  let ChoicenDate = Date.parse(time);
-  let Lefttime = ChoicenDate - CurrentDate;
+  let CurrentDate = new Date();
+  let Lefttime = time- CurrentDate;
   //Milliseconds are 1000 times less than a second. Therefore, to find seconds, you need to divide by 1000.
   //when the seconds are divided by 60, giving the number of seconds that don't complete a full minute.
   //Modulus (%) is used to extract the relevant remainder of seconds, minutes, and hours that fit within a minute, hour, and day, respectively.
@@ -48,3 +51,4 @@ function updateeverysecond(SelectedDate) {
         leftTime(SelectedDate);
     }, 1000);
 }
+
